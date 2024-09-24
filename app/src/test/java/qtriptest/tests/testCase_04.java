@@ -26,7 +26,7 @@ public class testCase_04 {
     }
 
     @Test(description = "Verify that adventure booking and cancellation works fine", priority = 4,
-            enabled = true, dataProvider = "userData", dataProviderClass = DP.class)
+            enabled = true, dataProvider = "userData", dataProviderClass = DP.class,groups = { "Reliability Flow" })
     public void TestCase04(String NewUserName, String Password, String dataset1, String dataset2,
             String dataset3) throws InterruptedException {
         boolean status;

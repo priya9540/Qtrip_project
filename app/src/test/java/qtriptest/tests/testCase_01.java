@@ -30,7 +30,7 @@ public class testCase_01 {
 
 
     @Test(description = "Check Registration and Login Functionality", priority = 1, enabled = true,
-            dataProvider = "userData", dataProviderClass = DP.class)
+            dataProvider = "userData", dataProviderClass = DP.class, groups = { "Login Flow" })
     public void TestCase01(String UserName, String Password) throws InterruptedException {
         Boolean status;
         RegisterPage register = new RegisterPage(driver);

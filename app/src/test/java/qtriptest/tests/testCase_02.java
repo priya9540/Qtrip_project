@@ -27,7 +27,7 @@ public class testCase_02 {
 
 
     @Test(description = "Verify that searchfilters work fine", priority = 2, enabled = true,
-            dataProvider = "userData", dataProviderClass = DP.class)
+            dataProvider = "userData", dataProviderClass = DP.class,groups = { " Search and Filter flow " })
     public void TestCase02(String CityName, String Category_Filter, String DurationFilter,
             String ExpectedFilteredResults, String ExpectedUnFilteredResults)
             throws InterruptedException {

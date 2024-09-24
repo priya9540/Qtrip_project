@@ -26,7 +26,7 @@ public class testCase_03 {
     }
 
     @Test(description = "Verify that adventure booking and cancellation works fine", priority = 3,
-            enabled = true, dataProvider = "userData", dataProviderClass = DP.class)
+            enabled = true, dataProvider = "userData", dataProviderClass = DP.class,groups = { "Booking and Cancellation Flow" })
     public void TestCase03(String NewUserName, String Password, String SearchCity,
             String AdventureName, String GuestName, String Date, String count)
             throws InterruptedException {
