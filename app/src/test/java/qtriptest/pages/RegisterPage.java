@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.devtools.Runtime.Timestamp;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -14,10 +15,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class RegisterPage {
     
-    RemoteWebDriver driver;
+    private WebDriver driver;
     String url = "https://qtripdynamic-qa-frontend.vercel.app/";
     public  String lastGeneratedUsername = "";
-    public RegisterPage(RemoteWebDriver driver) {
+    public RegisterPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver,this);
     }

@@ -1,6 +1,7 @@
 package qtriptest.tests;
 
 import qtriptest.DP;
+import qtriptest.DriverSingleton;
 import qtriptest.pages.LoginPage;
 import qtriptest.pages.RegisterPage;
 import java.net.MalformedURLException;
@@ -17,36 +18,36 @@ import org.testng.asserts.Assertion;
 import static org.testng.Assert.*;
 
 public class testCase_01 {
-    static RemoteWebDriver driver;
-     public  String lastGeneratedUsername;
+    private WebDriver driver; // Use WebDriver, not RemoteWebDriver (generalized)
+    public String lastGeneratedUsername;
 
+    // Initialize the driver using the Singleton class
     @BeforeSuite(alwaysRun = true)
-    public static void createDriver() throws MalformedURLException {
-        // Launch Browser using Zalenium
-        final DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setBrowserName(BrowserType.CHROME);
-        driver = new RemoteWebDriver(new URL("http://localhost:8082/wd/hub"), capabilities);
-        System.out.println("createDriver()");
-        driver.manage().window().maximize();
+    public void createDriver() {
+        driver = DriverSingleton.getDriverInstance(); // Get driver from singleton
+        System.out.println("Driver initialized using DriverSingleton");
     }
-    @Test(enabled = true,dataProvider="userData", dataProviderClass = DP.class)
-    public void TestCase01(String UserName,String Password) throws InterruptedException {
+
+
+    @Test(description = "Check Registration and Login Functionality", priority = 1, enabled = true,
+            dataProvider = "userData", dataProviderClass = DP.class)
+    public void TestCase01(String UserName, String Password) throws InterruptedException {
         Boolean status;
         RegisterPage register = new RegisterPage(driver);
         register.navigateToRegisterPage();
-      status=  register.RegisterNewUser(UserName, Password, true);
-       assertTrue(status, "Failed to Register");
-      // lastGeneratedUsername = register.lastGeneratedUsername;
-      lastGeneratedUsername = register.lastGeneratedUsername;
+        status = register.RegisterNewUser(UserName, Password, true);
+        assertTrue(status, "Failed to Register");
+        // lastGeneratedUsername = register.lastGeneratedUsername;
+        lastGeneratedUsername = register.lastGeneratedUsername;
         LoginPage login = new LoginPage(driver);
-        
+
 
         login.PerformLogin(lastGeneratedUsername, Password);
         System.out.println(lastGeneratedUsername);
-       status= login.VerifyUserLoggedIn();
-       assertTrue(status, "Failed to Login");
+        status = login.VerifyUserLoggedIn();
+        assertTrue(status, "Failed to Login");
         login.Logout();
-         assertTrue(status, "Failed to Logout");
+        assertTrue(status, "Failed to Logout");
 
     }
 

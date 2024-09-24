@@ -12,10 +12,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 
 public class LoginPage {
-    RemoteWebDriver driver;
+    private WebDriver driver;
     String url = "https://qtripdynamic-qa-frontend.vercel.app/pages/login/";
 
-    public LoginPage(RemoteWebDriver driver) {
+    public LoginPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
