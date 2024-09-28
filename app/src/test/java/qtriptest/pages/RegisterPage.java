@@ -1,8 +1,10 @@
 package qtriptest.pages;
 
+import qtriptest.SeleniumWrapper;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,62 +16,80 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class RegisterPage {
-    
+
     private WebDriver driver;
     String url = "https://qtripdynamic-qa-frontend.vercel.app/";
-    public  String lastGeneratedUsername = "";
+    public String lastGeneratedUsername = "";
+
     public RegisterPage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(driver, this);
     }
 
     public void navigateToRegisterPage() {
-        if (!driver.getCurrentUrl().equals(this.url)) {
-            driver.get(this.url);
-        }
+        // if (!driver.getCurrentUrl().equals(this.url)) {
+        //     driver.get(this.url);
+        // }
+       SeleniumWrapper.navigate(driver, url);
     }
 
-    @FindBy(xpath = "//a[@href='./pages/register/']")
-    WebElement RegistrationNavLink;
-    @FindBy(xpath = "//input[@id='floatingInput']")
-    WebElement UserNameTextBox;
-    @FindBy(xpath = "//input[@placeholder='Type to create account password']")
-    WebElement PasswordTextBox;
-    @FindBy(xpath = "//input[@name='confirmpassword']")
-    WebElement ConfirmPasswordTextBox;
-    @FindBy(xpath = "//button[text()='Register Now']")
-    WebElement RegisterNowButton;
+    // @FindBy(xpath = "//a[@href='./pages/register/']")
+    // WebElement RegistrationNavLink;
+    // @FindBy(xpath = "//input[@id='floatingInput']")
+    // WebElement UserNameTextBox;
+    // @FindBy(xpath = "//input[@placeholder='Type to create account password']")
+    // WebElement PasswordTextBox;
+    // @FindBy(xpath = "//input[@name='confirmpassword']")
+    // WebElement ConfirmPasswordTextBox;
+    // @FindBy(xpath = "//button[text()='Register Now']")
+    // WebElement RegisterNowButton;
 
 
 
-    public boolean RegisterNewUser(String UserName, String Password, boolean DynamicUserName) throws InterruptedException {
-        RegistrationNavLink.click();
+    public boolean RegisterNewUser(String UserName, String Password, boolean DynamicUserName)
+            throws InterruptedException {
+        // RegistrationNavLink.click();
+        // Thread.sleep(5000);
+        WebElement RegistrationNavLink =
+                driver.findElement(By.xpath("//a[@href='./pages/register/']"));
+        SeleniumWrapper.click(RegistrationNavLink, driver);
         Thread.sleep(5000);
         String test_data_username;
-        
-        if (DynamicUserName){
+
+        if (DynamicUserName) {
             // Concatenate the timestamp to string to form unique timestamp
             test_data_username = UUID.randomUUID().toString() + UserName;
-        }
-            else{
+        } else {
             test_data_username = UserName;
-            }
+        }
 
         // Type the generated username in the username field
-        UserNameTextBox.sendKeys(test_data_username);
-        PasswordTextBox.sendKeys(Password);
-        ConfirmPasswordTextBox.sendKeys(Password);
-        RegisterNowButton.click();
-       System.out.println(test_data_username);
-       System.out.println(Password);
-       
+        // UserNameTextBox.sendKeys(test_data_username);
+        // PasswordTextBox.sendKeys(Password);
+        // ConfirmPasswordTextBox.sendKeys(Password);
+        // RegisterNowButton.click();
+        // System.out.println(test_data_username);
+        // System.out.println(Password);
+        WebElement UserNameTextBox = driver.findElement(By.xpath("//input[@id='floatingInput']"));
+        SeleniumWrapper.sendKeys(UserNameTextBox, test_data_username);
+        WebElement PasswordTextBox = driver
+                .findElement(By.xpath("//input[@placeholder='Type to create account password']"));
+        SeleniumWrapper.sendKeys(PasswordTextBox, Password);
+        WebElement ConfirmPasswordTextBox =
+                driver.findElement(By.xpath("//input[@name='confirmpassword']"));
+        SeleniumWrapper.sendKeys(ConfirmPasswordTextBox, Password);
+        WebElement RegisterNowButton =
+                driver.findElement(By.xpath("//button[text()='Register Now']"));
+        SeleniumWrapper.click(RegisterNowButton, driver);
+        System.out.println(test_data_username);
+        System.out.println(Password);
 
         // try {
-        //     WebDriverWait wait = new WebDriverWait(driver, 30);
-        //     wait.until(ExpectedConditions.or(
-        //             ExpectedConditions.urlToBe("")));
+        // WebDriverWait wait = new WebDriverWait(driver, 30);
+        // wait.until(ExpectedConditions.or(
+        // ExpectedConditions.urlToBe("")));
         // } catch (TimeoutException e) {
-        //     return false;
+        // return false;
         // }
         Thread.sleep(5000);
 
@@ -78,5 +98,5 @@ public class RegisterPage {
         return this.driver.getCurrentUrl().contains("/login");
 
     }
-    
+
 }
